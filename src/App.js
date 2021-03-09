@@ -24,7 +24,46 @@ class App extends React.Component {
       description: "",
       error : false
     };
+
     this.getWeather();
+
+    this.weatherIcon = {
+        Thunderstorm: "wi-thunderstorm",
+        Drizzle: "wi-sleet",
+        Rain: "wi-storm-showers",
+        Snow: "wi-snow",
+        Atmosphere: "wi-fog",
+        Clear: "wi-day-sunny",
+        Clouds: "wi-day-fog"
+    };
+  }
+
+  get_WeatherIcon(icons, rangeId){
+      switch(true){
+        case rangeId >= 200 && rangeId <= 232:
+            this.setState({icon: this.weatherIcon.Thunderstorm})
+            break;
+        case rangeId >= 300 && rangeId <= 321:
+            this.setState({icon: this.weatherIcon.Drizzle})
+            break;
+        case rangeId >= 500 && rangeId <= 531:
+            this.setState({icon: this.weatherIcon.Rain})
+            break;
+        case rangeId >= 600 && rangeId <= 622:
+            this.setState({icon: this.weatherIcon.Snow})
+            break;
+        case rangeId >= 701 && rangeId <= 781:
+            this.setState({icon: this.weatherIcon.Atmosphere})
+            break;
+        case rangeId === 800:
+            this.setState({icon: this.weatherIcon.Clear})
+            break;
+        case rangeId >= 801 && rangeId <= 804:
+            this.setState({icon: this.weatherIcon.Clouds})
+            break;
+        default:
+            this.setState({icon: this.weatherIcon.Clouds})
+      }
   }
 
   getWeather = async () => {
@@ -43,8 +82,9 @@ class App extends React.Component {
     temp_max: Math.round(response.main.temp_max),
     temp_min: Math.round(response.main.temp_min),
     description: response.weather[0].description,
+  });
 
-  })
+  this.get_WeatherIcon(this.weatherIcon, response.weather[0]);
 
 };
 
@@ -58,6 +98,7 @@ render(){
       temp_min={this.state.temp_min}
       temp_max={this.state.temp_max}
       description={this.state.description}
+      weatherIcon={this.state.icon}
     />
     </div>
   )
