@@ -7,9 +7,9 @@ const Form = props => {
     <div className="container pb-4">
         <div>{props.error ? error() : null}</div>
         <div className="row justify-content-center">
-                <div className="form-wrap p-0 w-75">
+                <div className="form-wrap w-75">
 
-                    <h2 className="mt-5 mb-3 text-center">Où êtes-vous ?</h2>
+                    <h2 className="mt-3 mb-3 text-center">Où êtes-vous ?</h2>
 
                     <form onSubmit={props.loadweather}>
                         <div className="form-group wrap-input">
@@ -33,8 +33,8 @@ const Form = props => {
 
 function error(){
     return (
-        <div className="alert alert-danger mx-5" role="alert">
-            Veuillez entrer une ville et un code postal
+        <div className="alert alert-danger mx-5 mt-3" role="alert">
+            Veuillez entrer une ville et un pays valide
         </div>
     )
 }

@@ -1,5 +1,4 @@
 .form-weather {
-    width: 500px;
     border-radius: 10px;
     overflow: hidden;
     background: -webkit-linear-gradient(top, #7579ff, #b224ef);
@@ -64,7 +63,5 @@
     background: -webkit-linear-gradient(bottom, #7579ff, #b224ef);
     background: -o-linear-gradient(bottom, #7579ff, #b224ef);
     background: -moz-linear-gradient(bottom, #7579ff, #b224ef);
-    background: linear-gradient(bottom, #7579ff, #b224ef);
-  
   }
 

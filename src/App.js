@@ -65,7 +65,7 @@ class App extends React.Component {
       }
   }
 
-    getWeather = async (e) => {
+getWeather = async (e) => {
 
     e.preventDefault();
 
@@ -73,24 +73,30 @@ class App extends React.Component {
     const country = e.target.elements.country.value;
 
     if(city && country) {
-        const api_call = await fetch(
+        const api_call = await fetch
+        (
             `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&units=metric&lang=fr&appid=${API_key}`
-          );
+        );
         
-          const response = await api_call.json();
+        const response = await api_call.json();
         
-          console.log(response);
+          if (typeof this.state.main != "undefined") {
+            this.setState (
+                {
+                city: `${response.name}, ${response.sys.country}`,
+                celsius: Math.round(response.main.temp),
+                temp_max: Math.round(response.main.temp_max),
+                temp_min: Math.round(response.main.temp_min),
+                description: response.weather[0].description,
+                error: false
+                });
         
-          this.setState({
-            city: `${response.name}, ${response.sys.country}`,
-            celsius: Math.round(response.main.temp),
-            temp_max: Math.round(response.main.temp_max),
-            temp_min: Math.round(response.main.temp_min),
-            description: response.weather[0].description,
-            error: false
-          });
-        
-          this.get_WeatherIcon(this.weatherIcon, response.weather[0]);
+            this.get_WeatherIcon(this.weatherIcon, response.weather[0]);
+
+          } else {
+            this.setState({error:true});
+            }
+
     } else {
         this.setState({error:true});
     }
@@ -100,7 +106,7 @@ class App extends React.Component {
 render(){
   return(
     <div className="App py-5">
-        <div className="form-weather mx-auto my-5">
+        <div className="form-weather col-8 col-lg-4 shadow mx-auto my-5 ">
             <Form loadweather={this.getWeather} error={this.state.error} />
             <Weather 
             city={this.state.city} 
