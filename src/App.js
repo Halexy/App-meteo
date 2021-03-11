@@ -1,9 +1,11 @@
 import './App.css';
 
 import React from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
-import 'bootstrap/dist/css/bootstrap.min.css'
-import 'weather-icons/css/weather-icons.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'weather-icons/css/weather-icons.css';
 
 import Weather from './app_component/weather.component';
 import Form from './app_component/form.component';
@@ -35,6 +37,12 @@ class App extends React.Component {
         Clear: "wi-day-sunny",
         Clouds: "wi-day-fog"
     };
+  }
+
+  componentDidMount(){
+    AOS.init({
+      duration : 2000
+    })
   }
 
   get_WeatherIcon(icons, rangeId){
@@ -73,6 +81,7 @@ getWeather = async (e) => {
     const country = e.target.elements.country.value;
 
     if(city && country) {
+
         const api_call = await fetch
         (
             `https://api.openweathermap.org/data/2.5/weather?q=${city},${country}&units=metric&lang=fr&appid=${API_key}`
@@ -80,7 +89,9 @@ getWeather = async (e) => {
         
         const response = await api_call.json();
         
-          if (typeof this.state.main != "undefined") {
+          if (typeof response.main != "undefined") {
+            document.getElementById('weather').style = 'display:block'; 
+
             this.setState (
                 {
                 city: `${response.name}, ${response.sys.country}`,
@@ -95,6 +106,7 @@ getWeather = async (e) => {
 
           } else {
             this.setState({error:true});
+            document.getElementById('weather').style = 'display:none'; 
             }
 
     } else {
@@ -106,17 +118,24 @@ getWeather = async (e) => {
 render(){
   return(
     <div className="App py-5">
-        <div className="form-weather col-8 col-lg-4 shadow mx-auto my-5 ">
+        <div 
+        className="form-weather col-8 col-lg-4 shadow mx-auto my-5"
+        data-aos="fade-up"
+        data-aos-anchor-placement="top-bottom"
+        >
             <Form loadweather={this.getWeather} error={this.state.error} />
-            <Weather 
-            city={this.state.city} 
-            country={this.state.country} 
-            temp_celsius={this.state.celsius}
-            temp_min={this.state.temp_min}
-            temp_max={this.state.temp_max}
-            description={this.state.description}
-            weatherIcon={this.state.icon}
-            />
+            <div id="weather">
+                <Weather
+                city={this.state.city} 
+                country={this.state.country} 
+                temp_celsius={this.state.celsius}
+                temp_min={this.state.temp_min}
+                temp_max={this.state.temp_max}
+                description={this.state.description}
+                weatherIcon={this.state.icon}
+                />
+            </div>
+
         </div>
 
     </div>

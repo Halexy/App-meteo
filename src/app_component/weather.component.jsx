@@ -1,24 +1,30 @@
 import React from 'react';
 
 const Weather = (props) => {
+
+    var ucfirst = require('ucfirst');
+
     return (
         <div className="container">
             <div className="cards">
-                <h1>
+                <h1 className="text-dark">
                     {props.city}
                 </h1>
-                <h5 className="py-4">
+                <h5 className="py-4 text-dark">
                     <i className={`wi ${props.weatherIcon} display-1`} />
                 </h5>
                 
                 { props.temp_celsius ? (
-                    <h1 className="py-2">{props.temp_celsius}&deg;</h1>
+                    <h1 className="py-2 text-dark">{props.temp_celsius}&deg;</h1>
                 ) : null}
 
                 {/* {show max and min temp} */}
-                {minmaxTemp(props.temp_min, props.temp_max)}
+                <p className="text-dark">
+                    {minmaxTemp(props.temp_min, props.temp_max)}
+                </p>
+                
 
-                <h4 className="py-3">{props.description}</h4>
+                <h4 className="py-3 text-dark">{ucfirst(props.description)}</h4>
             </div>
         </div>
     )
