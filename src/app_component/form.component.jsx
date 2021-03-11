@@ -8,7 +8,7 @@ const Form = props => {
     return(
 
     <div className="container pb-4">
-        <div>{props.error ? error() : null}</div>
+        <div className="col-12 mx-auto">{props.error ? error() : null}</div>
         <div className="row justify-content-center">
 
             <div className="form-wrap w-75">
@@ -41,7 +41,7 @@ const Form = props => {
 
 function error(){
     return (
-        <div className="alert alert-danger mx-5 mt-3" role="alert">
+        <div className="alert alert-danger mx-auto mt-3 col-12" role="alert">
             Veuillez entrer une ville et un pays valide
         </div>
     )
